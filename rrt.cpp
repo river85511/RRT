@@ -10,12 +10,18 @@
 #include <QMessageBox>
 #include <QPalette>
 #include <QImage>
+#include <QPainter>
+#include <QDebug>
+#include <QPoint>
+#include <QCursor>
+
 
 RRT::RRT(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::RRT)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Rapidly Exploring Random Trees (RRT)");
 
 }
 
@@ -40,12 +46,31 @@ void RRT::DisplayMap_Mat2Pixmap(cv::Mat mat)
                      QImage::Format_RGB888);
     }
 
-    int w = ui->MapDislplay->width();
-    int h = ui->MapDislplay->height();
+    //int w = ui->MapDislplay->width();
+    //int h = ui->MapDislplay->height();
 
-    ui->MapDislplay->setPixmap(QPixmap::fromImage(img).scaled(w,h,Qt::KeepAspectRatio));
+    //ui->MapDislplay->setPixmap(QPixmap::fromImage(img).scaled(w,h,Qt::KeepAspectRatio));
+
+    ui->MapDislplay->setPixmap(QPixmap::fromImage(img));
     ui->MapDislplay->show();
+
 }
+
+void RRT::mousePressEvent(QMouseEvent *event)
+{
+    QPoint mappedPos = ui->MapDislplay->mapFromGlobal(QCursor::pos());
+    if( (mappedPos.x()>0) && (mappedPos.x()<ui->MapDislplay->width()) &&   //0<x<width
+        (mappedPos.y()>0  && mappedPos.y()<ui->MapDislplay->height()))     //0<y<height
+    {
+        qDebug() << mappedPos ;
+
+        cv::Point p = cv::Point(mappedPos.x(),mappedPos.y());
+
+        cv::circle(rrt_map,p,1,cv::Scalar(0,255,0),5,8);
+        DisplayMap_Mat2Pixmap(rrt_map);
+    }
+}
+
 
 RRT::~RRT()
 {
@@ -56,6 +81,8 @@ RRT::~RRT()
 
 void RRT::on_LoadButton_clicked()
 {
+    //圖得<= 800x500 pixels
+
     QString FilePath = QFileDialog::getOpenFileName(this, "Open Image", ".", "Image Files(*.jpg *.png)");
     cv::Mat img_ori;
 
@@ -69,11 +96,12 @@ void RRT::on_LoadButton_clicked()
             QMessageBox::information(NULL, "Warning", "Image can't be read","はい");
         }else
             ui->LoadDisplay->setText(" Image Path = " + FilePath);
+
+
+            cv::resize(img_ori,img_ori,cv::Size(800,500));
             cv::cvtColor(img_ori,this->rrt_map,CV_BGR2GRAY);
             this->DisplayMap_Mat2Pixmap(this->rrt_map);
 
     }
-
-
 
 }

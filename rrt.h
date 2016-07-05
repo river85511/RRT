@@ -10,6 +10,7 @@
 #include <QString>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QMouseEvent>
 
 namespace Ui {
 class RRT;
@@ -22,6 +23,7 @@ class RRT : public QMainWindow
 public:
     explicit RRT(QWidget *parent = 0);
     void DisplayMap_Mat2Pixmap(cv::Mat mat);
+    void mousePressEvent(QMouseEvent *event);
     ~RRT();
 
 private slots:

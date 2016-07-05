@@ -129,7 +129,7 @@ public:
         RRT->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(RRT);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 900, 25));
+        menuBar->setGeometry(QRect(0, 0, 900, 28));
         RRT->setMenuBar(menuBar);
         mainToolBar = new QToolBar(RRT);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
