@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -23,6 +22,7 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
+#include <mylabel.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -34,7 +34,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QLineEdit *LoadDisplay;
     QPushButton *LoadButton;
-    QLabel *MapDislplay;
+    myLabel *MapDislplay;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -64,7 +64,7 @@ public:
 
         horizontalLayout->addWidget(LoadButton);
 
-        MapDislplay = new QLabel(centralWidget);
+        MapDislplay = new myLabel(centralWidget);
         MapDislplay->setObjectName(QStringLiteral("MapDislplay"));
         MapDislplay->setGeometry(QRect(50, 80, 800, 500));
         QPalette palette;
@@ -126,6 +126,7 @@ public:
         MapDislplay->setPalette(palette);
         MapDislplay->setAutoFillBackground(false);
         MapDislplay->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
+        MapDislplay->setFrameShape(QFrame::Box);
         RRT->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(RRT);
         menuBar->setObjectName(QStringLiteral("menuBar"));

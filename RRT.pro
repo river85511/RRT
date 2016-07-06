@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        rrt.cpp
+        rrt.cpp \
+    mylabel.cpp
 
-HEADERS  += rrt.h
+HEADERS  += rrt.h \
+    mylabel.h
 
 FORMS    += rrt.ui
 

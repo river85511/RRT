@@ -23,17 +23,21 @@ class RRT : public QMainWindow
 public:
     explicit RRT(QWidget *parent = 0);
     void DisplayMap_Mat2Pixmap(cv::Mat mat);
-    void mousePressEvent(QMouseEvent *event);
     ~RRT();
 
 private slots:
     void on_LoadButton_clicked();
+    void mousePressed(int x, int y,bool leftOrRight);
 
 private:
     Ui::RRT *ui;
 
-    cv::Mat rrt_map;
+    cv::Mat img_load;    //img_load is used for saving the loaded image, so that the image can return to its original state after "reset()"
+    cv::Mat rrt_map;    //rrt_map is used for displaying on the label
+    cv::Mat rrt_map_gray; //rrt_map_gray is used for locating the postion of the boundary
 
+    bool startchosed;
+    bool goalchosed;
 };
 
 #endif // RRT_H
