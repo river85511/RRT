@@ -29,6 +29,12 @@ private slots:
     void on_LoadButton_clicked();
     void mousePressed(int x, int y,bool leftOrRight);
 
+    void on_resetButton_clicked();
+
+    void on_startButton_clicked();
+
+    void on_distanceInputBox_textChanged(const QString &arg1);
+
 private:
     Ui::RRT *ui;
 
@@ -36,8 +42,13 @@ private:
     cv::Mat rrt_map;    //rrt_map is used for displaying on the label
     cv::Mat rrt_map_gray; //rrt_map_gray is used for locating the postion of the boundary
 
-    bool startchosed;
-    bool goalchosed;
+    bool startchosed;   //startchosed is used to check if there's a start
+    bool goalchosed;    //goalchosed is used to check if there's a goal
+
+    bool mapinputted; //mapinputted is used to check if there's a map loaded
+    bool disinputted; //disinputted is used to check if the maximum allowable distance is inputted
+
+    int dis_limit;  //dis_limit is used to save the maximum allowable distance inputted by the user
 };
 
 #endif // RRT_H

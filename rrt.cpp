@@ -27,6 +27,8 @@ RRT::RRT(QWidget *parent) :
 
     this->startchosed = 0;
     this->goalchosed = 0;
+    this->mapinputted = 0;
+    this->disinputted = 0;
 
     connect(ui->MapDislplay,SIGNAL(mousePressed(int,int,bool)),this,SLOT(mousePressed(int,int,bool)));
 
@@ -51,10 +53,14 @@ void RRT::on_LoadButton_clicked()
         this->img_load = cv::imread(FilePath.toStdString()); // load image by openCV
 
         if(this->img_load.empty()){
-            QMessageBox::information(NULL, "Warning", "Image can't be read","はい");
-        }else
-            ui->LoadDisplay->setText(" Image Path = " + FilePath);
 
+            QMessageBox::information(NULL, "Warning", "Image can't be read","はい");
+
+        }else                                                                       // map is loaded correctly
+
+            this->mapinputted = 1;
+
+            ui->LoadDisplay->setText(" Image Path = " + FilePath);
 
             cv::resize(this->img_load,this->rrt_map,cv::Size(800,500));             //resize the image to 800x500 pixels
             this->DisplayMap_Mat2Pixmap(this->rrt_map);                             //display the map on label
@@ -76,7 +82,6 @@ void RRT::DisplayMap_Mat2Pixmap(cv::Mat mat)
 
     if(mat.channels() == 1)     //Gray image
     {
-        qDebug() << "gray";
         img = QImage((const uchar*)(mat.data),
                      mat.cols,mat.rows,
                      mat.cols*mat.channels(),
@@ -84,7 +89,6 @@ void RRT::DisplayMap_Mat2Pixmap(cv::Mat mat)
 
     }else if(mat.channels() == 3)     // RGB image
     {
-        qDebug() << "rgb";
         cv::cvtColor(mat,rgb,CV_BGR2RGB);
         img = QImage((const uchar*)(rgb.data),
                      rgb.cols,rgb.rows,
@@ -104,22 +108,82 @@ void RRT::DisplayMap_Mat2Pixmap(cv::Mat mat)
 void RRT::mousePressed(int x, int y,bool leftOrRight)
 {
 
-    //QString str = QString("x= %1 , y = %2").arg(x).arg(y);
-    //qDebug() << str;
-    if(this->startchosed ==0 || this->goalchosed == 0){
-        cv::Point p = cv::Point(x,y);
+    if(mapinputted == 1){       //if then map is loaded then....
 
-        if(leftOrRight == 1 && this->startchosed == 0)    //Left  Click
-        {
-            cv::circle(this->rrt_map,p,1,cv::Scalar(0,255,0),5,8);
-            this->startchosed = 1;
-        }
-        else if(leftOrRight == 0 && goalchosed == 0)   //Right Click
-        {
-            cv::circle(this->rrt_map,p,1,cv::Scalar(0,0,255),5,8);
-            this->goalchosed = 1;
+        if(this->startchosed ==0 || this->goalchosed == 0){     // if the user hasn't input starting point and goal point
+
+            if(leftOrRight == 1 && this->startchosed == 0)    //Left Click for starting point
+            {
+                cv::circle(this->rrt_map,cv::Point(x,y),1,cv::Scalar(0,255,0),5,8);
+                this->startchosed = 1;
+            }
+            else if(leftOrRight == 0 && goalchosed == 0)   //Right Click for goal
+            {
+                cv::circle(this->rrt_map,cv::Point(x,y),1,cv::Scalar(0,0,255),5,8);
+                this->goalchosed = 1;
+            }
+
+            DisplayMap_Mat2Pixmap(this->rrt_map);       //Display the starting point and goal on the map!
         }
 
-        DisplayMap_Mat2Pixmap(this->rrt_map);
     }
+
+}
+
+void RRT::on_resetButton_clicked()
+{
+    if(mapinputted == 1){
+
+        cv::resize(this->img_load,this->rrt_map,cv::Size(800,500));             //resize the image to 800x500 pixels
+        this->DisplayMap_Mat2Pixmap(this->rrt_map);                             //display the map on label
+
+        this->startchosed = 0;
+        this->goalchosed = 0;
+
+        if(disinputted == 1){
+            ui->distanceInputBox->setText("");
+            this->disinputted = 0;
+        }
+
+    }else if(mapinputted == 0){
+
+        if(disinputted == 1){
+            ui->distanceInputBox->setText("");
+            this->disinputted = 0;
+        }
+
+        QMessageBox::information(NULL, "提醒", "Please load a map first!","はい");
+
+    }
+}
+
+void RRT::on_startButton_clicked()
+{
+    if(mapinputted == 1){
+
+        if(startchosed == 0 || goalchosed == 0 || disinputted ==0){
+
+            if(startchosed == 0 || goalchosed == 0)
+                QMessageBox::information(NULL, "提醒", "Please select your start and goal!","はい");
+
+            if(disinputted ==0)
+                QMessageBox::information(NULL, "提醒", "Please input maximum allowable distance!","はい");
+        }
+        else if(startchosed == 1 && goalchosed == 1 && disinputted == 1){
+            qDebug() << "START!";
+        }
+
+    }else if(mapinputted == 0){
+        QMessageBox::information(NULL, "提醒", "Please load a map first!","はい");
+    }
+}
+
+void RRT::on_distanceInputBox_textChanged(const QString &arg1)
+{
+    if(arg1.length() != 0){
+        this->dis_limit = arg1.toInt();
+        this->disinputted = 1;
+    }
+
+    //qDebug() << dis_limit;
 }

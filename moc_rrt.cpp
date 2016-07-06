@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_RRT_t {
-    QByteArrayData data[7];
-    char stringdata0[56];
+    QByteArrayData data[11];
+    char stringdata0[139];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,11 +35,17 @@ QT_MOC_LITERAL(2, 26, 0), // ""
 QT_MOC_LITERAL(3, 27, 12), // "mousePressed"
 QT_MOC_LITERAL(4, 40, 1), // "x"
 QT_MOC_LITERAL(5, 42, 1), // "y"
-QT_MOC_LITERAL(6, 44, 11) // "leftOrRight"
+QT_MOC_LITERAL(6, 44, 11), // "leftOrRight"
+QT_MOC_LITERAL(7, 56, 22), // "on_resetButton_clicked"
+QT_MOC_LITERAL(8, 79, 22), // "on_startButton_clicked"
+QT_MOC_LITERAL(9, 102, 31), // "on_distanceInputBox_textChanged"
+QT_MOC_LITERAL(10, 134, 4) // "arg1"
 
     },
     "RRT\0on_LoadButton_clicked\0\0mousePressed\0"
-    "x\0y\0leftOrRight"
+    "x\0y\0leftOrRight\0on_resetButton_clicked\0"
+    "on_startButton_clicked\0"
+    "on_distanceInputBox_textChanged\0arg1"
 };
 #undef QT_MOC_LITERAL
 
@@ -49,7 +55,7 @@ static const uint qt_meta_data_RRT[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -57,12 +63,18 @@ static const uint qt_meta_data_RRT[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   24,    2, 0x08 /* Private */,
-       3,    3,   25,    2, 0x08 /* Private */,
+       1,    0,   39,    2, 0x08 /* Private */,
+       3,    3,   40,    2, 0x08 /* Private */,
+       7,    0,   47,    2, 0x08 /* Private */,
+       8,    0,   48,    2, 0x08 /* Private */,
+       9,    1,   49,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Bool,    4,    5,    6,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   10,
 
        0        // eod
 };
@@ -75,6 +87,9 @@ void RRT::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         switch (_id) {
         case 0: _t->on_LoadButton_clicked(); break;
         case 1: _t->mousePressed((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
+        case 2: _t->on_resetButton_clicked(); break;
+        case 3: _t->on_startButton_clicked(); break;
+        case 4: _t->on_distanceInputBox_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -105,13 +120,13 @@ int RRT::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 5;
     }
     return _id;
 }

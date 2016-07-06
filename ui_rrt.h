@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -35,6 +36,15 @@ public:
     QLineEdit *LoadDisplay;
     QPushButton *LoadButton;
     myLabel *MapDislplay;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label;
+    QLineEdit *distanceInputBox;
+    QLabel *label_2;
+    QWidget *widget1;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *resetButton;
+    QPushButton *startButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -43,7 +53,7 @@ public:
     {
         if (RRT->objectName().isEmpty())
             RRT->setObjectName(QStringLiteral("RRT"));
-        RRT->resize(900, 800);
+        RRT->resize(900, 747);
         centralWidget = new QWidget(RRT);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
@@ -127,6 +137,63 @@ public:
         MapDislplay->setAutoFillBackground(false);
         MapDislplay->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         MapDislplay->setFrameShape(QFrame::Box);
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(120, 620, 301, 51));
+        horizontalLayout_2 = new QHBoxLayout(widget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(widget);
+        label->setObjectName(QStringLiteral("label"));
+        QFont font;
+        font.setPointSize(18);
+        label->setFont(font);
+
+        horizontalLayout_2->addWidget(label);
+
+        distanceInputBox = new QLineEdit(widget);
+        distanceInputBox->setObjectName(QStringLiteral("distanceInputBox"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(distanceInputBox->sizePolicy().hasHeightForWidth());
+        distanceInputBox->setSizePolicy(sizePolicy);
+        distanceInputBox->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_2->addWidget(distanceInputBox);
+
+        label_2 = new QLabel(widget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        horizontalLayout_2->addWidget(label_2);
+
+        widget1 = new QWidget(centralWidget);
+        widget1->setObjectName(QStringLiteral("widget1"));
+        widget1->setGeometry(QRect(490, 620, 281, 51));
+        horizontalLayout_3 = new QHBoxLayout(widget1);
+        horizontalLayout_3->setSpacing(50);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        resetButton = new QPushButton(widget1);
+        resetButton->setObjectName(QStringLiteral("resetButton"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(resetButton->sizePolicy().hasHeightForWidth());
+        resetButton->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_3->addWidget(resetButton);
+
+        startButton = new QPushButton(widget1);
+        startButton->setObjectName(QStringLiteral("startButton"));
+        sizePolicy1.setHeightForWidth(startButton->sizePolicy().hasHeightForWidth());
+        startButton->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_3->addWidget(startButton);
+
         RRT->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(RRT);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -149,6 +216,10 @@ public:
         RRT->setWindowTitle(QApplication::translate("RRT", "RRT", 0));
         LoadButton->setText(QApplication::translate("RRT", "Load", 0));
         MapDislplay->setText(QString());
+        label->setText(QApplication::translate("RRT", "Distance:", 0));
+        label_2->setText(QApplication::translate("RRT", "px", 0));
+        resetButton->setText(QApplication::translate("RRT", "RESET", 0));
+        startButton->setText(QApplication::translate("RRT", "START", 0));
     } // retranslateUi
 
 };
