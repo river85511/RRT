@@ -50,11 +50,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		rrt.cpp \
-		mylabel.cpp moc_rrt.cpp \
+		mylabel.cpp \
+		node.cpp moc_rrt.cpp \
 		moc_mylabel.cpp
 OBJECTS       = main.o \
 		rrt.o \
 		mylabel.o \
+		node.o \
 		moc_rrt.o \
 		moc_mylabel.o
 DIST          = ../Qt/5.6/gcc_64/mkspecs/features/spec_pre.prf \
@@ -192,9 +194,11 @@ DIST          = ../Qt/5.6/gcc_64/mkspecs/features/spec_pre.prf \
 		../Qt/5.6/gcc_64/mkspecs/features/yacc.prf \
 		../Qt/5.6/gcc_64/mkspecs/features/lex.prf \
 		RRT.pro rrt.h \
-		mylabel.h main.cpp \
+		mylabel.h \
+		node.h main.cpp \
 		rrt.cpp \
-		mylabel.cpp
+		mylabel.cpp \
+		node.cpp
 QMAKE_TARGET  = RRT
 DESTDIR       = 
 TARGET        = RRT
@@ -497,8 +501,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents rrt.h mylabel.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp rrt.cpp mylabel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents rrt.h mylabel.h node.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp rrt.cpp mylabel.cpp node.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents rrt.ui $(DISTDIR)/
 
 
@@ -641,6 +645,7 @@ moc_rrt.cpp: ../Qt/5.6/gcc_64/include/QtWidgets/QMainWindow \
 		../Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
 		../Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
 		../Qt/5.6/gcc_64/include/QtGui/QMouseEvent \
+		node.h \
 		rrt.h
 	/home/river85511/Qt/5.6/gcc_64/bin/moc $(DEFINES) -I/home/river85511/Qt/5.6/gcc_64/mkspecs/linux-g++ -I/home/river85511/RRT_COPY -I/usr/local/include -I/usr/local/include/opencv -I/usr/local/include/opencv2 -I/home/river85511/Qt/5.6/gcc_64/include -I/home/river85511/Qt/5.6/gcc_64/include/QtWidgets -I/home/river85511/Qt/5.6/gcc_64/include/QtGui -I/home/river85511/Qt/5.6/gcc_64/include/QtCore rrt.h -o moc_rrt.cpp
 
@@ -999,6 +1004,7 @@ main.o: main.cpp rrt.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
 		../Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
 		../Qt/5.6/gcc_64/include/QtGui/QMouseEvent \
+		node.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/QApplication \
 		../Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
 		../Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1125,6 +1131,7 @@ rrt.o: rrt.cpp rrt.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
 		../Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
 		../Qt/5.6/gcc_64/include/QtGui/QMouseEvent \
+		node.h \
 		ui_rrt.h \
 		../Qt/5.6/gcc_64/include/QtCore/QVariant \
 		../Qt/5.6/gcc_64/include/QtWidgets/QAction \
@@ -1161,6 +1168,8 @@ rrt.o: rrt.cpp rrt.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/qstyle.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/qtabbar.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/qrubberband.h \
+		../Qt/5.6/gcc_64/include/QtWidgets/QLabel \
+		../Qt/5.6/gcc_64/include/QtWidgets/qlabel.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/QLineEdit \
 		../Qt/5.6/gcc_64/include/QtWidgets/qlineedit.h \
 		../Qt/5.6/gcc_64/include/QtGui/qtextcursor.h \
@@ -1179,8 +1188,6 @@ rrt.o: rrt.cpp rrt.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/qtoolbar.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		mylabel.h \
-		../Qt/5.6/gcc_64/include/QtWidgets/QLabel \
-		../Qt/5.6/gcc_64/include/QtWidgets/qlabel.h \
 		../Qt/5.6/gcc_64/include/QtGui/QPalette \
 		../Qt/5.6/gcc_64/include/QtGui/QImage \
 		../Qt/5.6/gcc_64/include/QtGui/QPainter \
@@ -1300,6 +1307,9 @@ mylabel.o: mylabel.cpp mylabel.h \
 		../Qt/5.6/gcc_64/include/QtWidgets/qframe.h \
 		../Qt/5.6/gcc_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mylabel.o mylabel.cpp
+
+node.o: node.cpp node.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o node.o node.cpp
 
 moc_rrt.o: moc_rrt.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_rrt.o moc_rrt.cpp
